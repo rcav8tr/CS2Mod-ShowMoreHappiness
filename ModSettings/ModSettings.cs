@@ -96,7 +96,15 @@ namespace ShowMoreHappiness
         [SettingsUIButton()]
         public bool ResetSettings
         {
-            set { SetDefaults(); }
+            set
+            {
+                // Set defaults.
+                SetDefaults();
+
+                // Because settings were changed thru code, need to save settings explicitly.
+                // This saves settings for the game and all mods.
+                AssetDatabase.global.SaveSettings();
+            }
         }
 
         /// <summary>

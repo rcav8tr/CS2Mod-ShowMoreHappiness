@@ -20,13 +20,10 @@ namespace ShowMoreHappiness
             
             try
             {
-                // Register mod settings.
+                // Register and load mod settings.
                 ModSettings = new ModSettings(this);
                 ModSettings.RegisterInOptionsUI();
-
-                // Load mod settings.
                 AssetDatabase.global.LoadSettings(ModAssemblyInfo.Name, ModSettings, new ModSettings(this));
-                ModSettings.ApplyAndSave();
 
                 // Initialize translations.
                 Translation.Initialize();
@@ -95,7 +92,6 @@ namespace ShowMoreHappiness
             LogUtil.Info($"{nameof(Mod)}.{nameof(OnDispose)}");
 
             // Unregister mod settings.
-            ModSettings?.ApplyAndSave();
             ModSettings?.UnregisterInOptionsUI();
             ModSettings = null;
         }

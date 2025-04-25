@@ -4,6 +4,9 @@ Show more happiness factors for a city, district, building, or household.
 # Description
 This mod allows you to control the display of happiness factors thru the settings in Options.
 
+If you change the display of happiness factors while Happiness is displayed,
+close and reopen the Happiness to see the changes.
+
 ### Maximum Factors to Show
 Sets the maximum number of happiness factors to show.
 To show all happiness factors, choose the highest value.

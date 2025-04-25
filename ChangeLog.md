@@ -1,1 +1,1 @@
-﻿- Initial release.
+﻿- Fix handling of mod settings.

@@ -20,6 +20,9 @@ Show more happiness factors for a city, district, building, or household.
 # Description
 This mod allows you to control the display of happiness factors thru the settings in Options.
 
+If you change the display of happiness factors while Happiness is displayed,
+close and reopen the Happiness to see the changes.
+
 ### Maximum Factors to Show
 Sets the maximum number of happiness factors to show.
 To show all happiness factors, choose the highest value.
@@ -71,7 +74,7 @@ This mod can be safely disabled or unsubscribed at any time.
     <ForumLink Value="https://forum.paradoxplaza.com/forum/threads/show-more-happiness.1731017/" />
 
     <!-- Version of the mod.  Copied from assembly Version. -->
-    <ModVersion Value="1.0.0" />
+    <ModVersion Value="1.0.1" />
 
     <!-- Recommended version of the base game to use the mod. -->
     <GameVersion Value="1.*" />
@@ -81,7 +84,7 @@ This mod can be safely disabled or unsubscribed at any time.
 
     <!-- Change log.  Copied from ChangeLog.md file.  Supports minimal markdown subset. -->
     <ChangeLog>
-- Initial release.
+- Fix handling of mod settings.
 </ChangeLog>
 
     <!-- External links. Supported types are discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab.  Can be set multiple times. -->
