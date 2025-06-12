@@ -25,7 +25,7 @@ namespace ShowMoreHappiness
         /// </summary>
         public static void Initialize()
         {
-            LogUtil.Info($"{nameof(PatchAverageHappinessSection)}.{nameof(Initialize)}");
+            Mod.log.Info($"{nameof(PatchAverageHappinessSection)}.{nameof(Initialize)}");
 
             // Find fields from AverageHappinessSection.
             FieldInfo[] fieldInfos = typeof(AverageHappinessSection).GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
@@ -41,21 +41,21 @@ namespace ShowMoreHappiness
             }
 
             // Check if fields were found.
-            if (_fieldAverageHappiness == null) { LogUtil.Error("Unable to find field AverageHappinessSection.averageHappiness."); return; }
-            if (_fieldHappinessFactors == null) { LogUtil.Error("Unable to find field AverageHappinessSection.happinessFactors."); return; }
-            if (_fieldFactors          == null) { LogUtil.Error("Unable to find field AverageHappinessSection.m_Factors."       ); return; }
+            if (_fieldAverageHappiness == null) { Mod.log.Error("Unable to find field AverageHappinessSection.averageHappiness."); return; }
+            if (_fieldHappinessFactors == null) { Mod.log.Error("Unable to find field AverageHappinessSection.happinessFactors."); return; }
+            if (_fieldFactors          == null) { Mod.log.Error("Unable to find field AverageHappinessSection.m_Factors."       ); return; }
 
             // Use Harmony to create a postfix patch for AverageHappinessSection.OnProcess().
             MethodInfo methodOnProcessOriginal = typeof(AverageHappinessSection).GetMethod("OnProcess", BindingFlags.Instance | BindingFlags.NonPublic);
             if (methodOnProcessOriginal == null)
             {
-                LogUtil.Error($"Unable to find original method {nameof(AverageHappinessSection)}.OnProcess.");
+                Mod.log.Error($"Unable to find original method {nameof(AverageHappinessSection)}.OnProcess.");
                 return;
             }
             MethodInfo methodOnProcessPostfix = typeof(PatchAverageHappinessSection).GetMethod(nameof(OnProcessPostfix), BindingFlags.Static | BindingFlags.NonPublic);
             if (methodOnProcessPostfix == null)
             {
-                LogUtil.Error($"Unable to find patch postfix method {nameof(PatchAverageHappinessSection)}.{nameof(OnProcessPostfix)}.");
+                Mod.log.Error($"Unable to find patch postfix method {nameof(PatchAverageHappinessSection)}.{nameof(OnProcessPostfix)}.");
                 return;
             }
             new Harmony(HappinessUtils.HarmonyID).Patch(methodOnProcessOriginal, null, new HarmonyMethod(methodOnProcessPostfix));
@@ -64,13 +64,13 @@ namespace ShowMoreHappiness
             MethodInfo methodOnWritePropertiesOriginal = typeof(AverageHappinessSection).GetMethod("OnWriteProperties", BindingFlags.Instance | BindingFlags.Public);
             if (methodOnWritePropertiesOriginal == null)
             {
-                LogUtil.Error($"Unable to find original method {nameof(AverageHappinessSection)}.OnWriteProperties.");
+                Mod.log.Error($"Unable to find original method {nameof(AverageHappinessSection)}.OnWriteProperties.");
                 return;
             }
             MethodInfo methodOnWritePropertiesPrefix = typeof(PatchAverageHappinessSection).GetMethod(nameof(OnWritePropertiesPrefix), BindingFlags.Static | BindingFlags.NonPublic);
             if (methodOnWritePropertiesPrefix == null)
             {
-                LogUtil.Error($"Unable to find patch prefix method {nameof(PatchAverageHappinessSection)}.{nameof(OnWritePropertiesPrefix)}.");
+                Mod.log.Error($"Unable to find patch prefix method {nameof(PatchAverageHappinessSection)}.{nameof(OnWritePropertiesPrefix)}.");
                 return;
             }
             new Harmony(HappinessUtils.HarmonyID).Patch(methodOnWritePropertiesOriginal, new HarmonyMethod(methodOnWritePropertiesPrefix), null);

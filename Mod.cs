@@ -1,4 +1,5 @@
 ﻿using Colossal.IO.AssetDatabase;
+using Colossal.Logging;
 using Game;
 using Game.Modding;
 using System;
@@ -8,6 +9,12 @@ namespace ShowMoreHappiness
 {
     public class Mod : IMod
     {
+        // Create a new log just for this mod.
+        // This mod will have its own log file in the game's Logs folder.
+        public static readonly ILog log = LogManager.GetLogger(ModAssemblyInfo.Name)
+            .SetShowsErrorsInUI(true)                       // Show message in UI for severity level Error and above.
+            .SetShowsStackTraceAboveLevels(Level.Error);    // Include stack trace for severity level Error and above.
+
         // The global settings for this mod.
         public static ModSettings ModSettings { get; set; }
 
@@ -16,7 +23,7 @@ namespace ShowMoreHappiness
         /// </summary>
         public void OnLoad(UpdateSystem updateSystem)
         {
-            LogUtil.Info($"{nameof(Mod)}.{nameof(OnLoad)} Version {ModAssemblyInfo.Version}");
+            log.Info($"{nameof(Mod)}.{nameof(OnLoad)} Version {ModAssemblyInfo.Version}");
             
             try
             {
@@ -48,7 +55,7 @@ namespace ShowMoreHappiness
                 //        if (keyValue.Value.ToLower().Contains("separate"))
                 //        //if (keyValue.Value.StartsWith("Cargo"))
                 //        {
-                //            LogUtil.Info(keyValue.Key + "\t" + keyValue.Value);
+                //            log.Info(keyValue.Key + "\t" + keyValue.Value);
                 //        }
                 //    }
                 //}
@@ -62,7 +69,7 @@ namespace ShowMoreHappiness
                 //    {
                 //        if (keyValue.Key == "EconomyPanel.PRODUCTION_PAGE_PRODUCTIONLINK[Import]")
                 //        {
-                //            LogUtil.Info(keyValue.Key + "\t" + localeID + "\t" + keyValue.Value);
+                //            log.Info(keyValue.Key + "\t" + localeID + "\t" + keyValue.Value);
                 //            break;
                 //        }
                 //    }
@@ -78,10 +85,10 @@ namespace ShowMoreHappiness
             }
             catch (Exception ex)
             {
-                LogUtil.Exception(ex);
+                log.Error(ex);
             }
 
-            LogUtil.Info($"{nameof(Mod)}.{nameof(OnLoad)} complete.");
+            log.Info($"{nameof(Mod)}.{nameof(OnLoad)} complete.");
         }
 
         /// <summary>
@@ -89,7 +96,7 @@ namespace ShowMoreHappiness
         /// </summary>
         public void OnDispose()
         {
-            LogUtil.Info($"{nameof(Mod)}.{nameof(OnDispose)}");
+            log.Info($"{nameof(Mod)}.{nameof(OnDispose)}");
 
             // Unregister mod settings.
             ModSettings?.UnregisterInOptionsUI();

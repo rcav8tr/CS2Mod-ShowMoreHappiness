@@ -1,1 +1,1 @@
-﻿- Fix handling of mod settings.
+﻿- Code cleanup.

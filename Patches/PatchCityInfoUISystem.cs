@@ -24,21 +24,6 @@ namespace ShowMoreHappiness
         // Other systems.
     	private CitizenHappinessSystem _citizenHappinessSystem;
 
-        // Component lookups.
-		[ReadOnly] private ComponentLookup<Locked> _componentLookupLocked;
-
-        /// <summary>
-        /// Called before OnCreate.
-        /// </summary>
-        protected override void OnCreateForCompiler()
-        {
-            base.OnCreateForCompiler();
-            LogUtil.Info($"{nameof(PatchCityInfoUISystem)}.{nameof(OnCreateForCompiler)}");
-
-            // Assign component lookups.
-            _componentLookupLocked = CheckedStateRef.GetComponentLookup<Locked>();
-        }
-
         /// <summary>
         /// Initialize this system.
         /// </summary>
@@ -46,7 +31,7 @@ namespace ShowMoreHappiness
         protected override void OnCreate()
         {
             base.OnCreate();
-            LogUtil.Info($"{nameof(PatchCityInfoUISystem)}.{nameof(OnCreate)}");
+            Mod.log.Info($"{nameof(PatchCityInfoUISystem)}.{nameof(OnCreate)}");
 
             // Save the game's instance of this system.
             _patchCityInfoUISystem = this;
@@ -58,13 +43,13 @@ namespace ShowMoreHappiness
             MethodInfo originalMethod = typeof(CityInfoUISystem).GetMethod("WriteHappinessFactors", BindingFlags.Instance | BindingFlags.NonPublic);
             if (originalMethod == null)
             {
-                LogUtil.Error($"Unable to find original method {nameof(CityInfoUISystem)}.WriteHappinessFactors.");
+                Mod.log.Error($"Unable to find original method {nameof(CityInfoUISystem)}.WriteHappinessFactors.");
                 return;
             }
             MethodInfo prefixMethod = typeof(PatchCityInfoUISystem).GetMethod(nameof(WriteHappinessFactors), BindingFlags.Static | BindingFlags.NonPublic);
             if (prefixMethod == null)
             {
-                LogUtil.Error($"Unable to find patch prefix method {nameof(PatchCityInfoUISystem)}.{nameof(WriteHappinessFactors)}.");
+                Mod.log.Error($"Unable to find patch prefix method {nameof(PatchCityInfoUISystem)}.{nameof(WriteHappinessFactors)}.");
                 return;
             }
             new Harmony(HappinessUtils.HarmonyID).Patch(originalMethod, new HarmonyMethod(prefixMethod), null);
@@ -91,8 +76,7 @@ namespace ShowMoreHappiness
             {
                 Entity singletonEntity = entityQuery.GetSingletonEntity();
                 DynamicBuffer<HappinessFactorParameterData> buffer = base.EntityManager.GetBuffer<HappinessFactorParameterData>(singletonEntity, isReadOnly: true);
-                _componentLookupLocked.Update(ref base.CheckedStateRef);
-                ComponentLookup<Locked> locked = _componentLookupLocked;
+                ComponentLookup<Locked> locked = SystemAPI.GetComponentLookup<Locked>(true);
                 for (int i = 0; i < (int)CitizenHappinessSystem.HappinessFactor.Count; i++)
                 {
                     int num = Mathf.RoundToInt(_citizenHappinessSystem.GetHappinessFactor((CitizenHappinessSystem.HappinessFactor)i, buffer, ref locked).x);
