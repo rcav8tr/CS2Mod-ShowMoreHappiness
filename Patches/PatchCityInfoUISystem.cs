@@ -110,6 +110,5 @@ namespace ShowMoreHappiness
             // Do not call original method.
             return false;
         }
-
     }
 }
