@@ -1,1 +1,1 @@
-﻿- Updated for game version 1.5.2.
+﻿- Update for game version 1.5.7.

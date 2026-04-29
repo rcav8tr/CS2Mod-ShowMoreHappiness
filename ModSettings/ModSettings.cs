@@ -9,7 +9,7 @@ using Unity.Entities;
 
 namespace ShowMoreHappiness
 {
-    [FileLocation(nameof(ShowMoreHappiness))]
+    [FileLocation("ModsSettings/" + nameof(ShowMoreHappiness) + "/" + nameof(ShowMoreHappiness))]
     [SettingsUIGroupOrder(GroupGeneral, GroupAbout)]
     [SettingsUIShowGroupName(GroupGeneral, GroupAbout)]
     public class ModSettings : ModSetting

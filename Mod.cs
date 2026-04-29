@@ -16,7 +16,7 @@ namespace ShowMoreHappiness
             .SetShowsStackTraceAboveLevels(Level.Error);    // Include stack trace for severity level Error and above.
 
         // The global settings for this mod.
-        public static ModSettings ModSettings { get; set; }
+        public static ModSettings ModSettings { get; private set; }
 
         /// <summary>
         /// One-time mod loading.
